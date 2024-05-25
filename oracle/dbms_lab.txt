@@ -1,0 +1,154 @@
+SQL> create user mca39 identified by "123456";
+
+User created.
+
+SQL> grant all privileges to "mca39";
+grant all privileges to "mca39"
+                        *
+ERROR at line 1:
+ORA-01917: user or role 'mca39' does not exist 
+
+
+SQL> grant all privileges to 'mca39';
+grant all privileges to 'mca39'
+                        *
+ERROR at line 1:
+ORA-00987: missing or invalid username(s) 
+
+
+SQL> grant all privileges to mca39;
+
+Grant succeeded.
+
+SQL> create table student(Roll_no INT PRIMARY KEY, Name VARCHAR2(20), Dept VARCHAR(20), City VARCHAR(
+  2  create table student(Roll_no INT PRIMARY KEY, Name VARCHAR2(20), Dept VARCHAR(20), City VARCHAR2(20));
+create table student(Roll_no INT PRIMARY KEY, Name VARCHAR2(20), Dept VARCHAR(20), City VARCHAR2(20))
+*
+ERROR at line 2:
+ORA-00910: specified length too long for its datatype 
+
+
+SQL> create table student(Roll_no INT PRIMARY KEY, Name VARCHAR2(20), Dept VARCHAR2(20), City VARCHAR2(20));
+
+Table created.
+
+SQL> decs student
+SP2-0734: unknown command beginning "decs stude..." - rest of line ignored.
+SQL> decs student;
+SP2-0734: unknown command beginning "decs stude..." - rest of line ignored.
+SQL> desc student;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLL_NO                                   NOT NULL NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ DEPT                                               VARCHAR2(20)
+ CITY                                               VARCHAR2(20)
+
+SQL> select today date;
+select today date
+             *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> select sysdate from dual;
+
+SYSDATE                                                                         
+---------                                                                       
+08-NOV-23                                                                       
+
+SQL> select 2+2 from dual;
+
+       2+2                                                                      
+----------                                                                      
+         4                                                                      
+
+SQL> insert into student values(39, "Arjit Kumar Singh", "MCA", "Dhanbad");
+insert into student values(39, "Arjit Kumar Singh", "MCA", "Dhanbad")
+                                                           *
+ERROR at line 1:
+ORA-00984: column not allowed here 
+
+
+SQL> insert into student values(39, 'Arjit Kumar Singh', 'MCA', 'Dhanbad');
+
+1 row created.
+
+SQL> select * from student;
+
+   ROLL_NO NAME                 DEPT                 CITY                       
+---------- -------------------- -------------------- --------------------       
+        39 Arjit Kumar Singh    MCA                  Dhanbad                    
+
+SQL> insert into student values(45, 'Tanmay Pal', 'MCA', 'Durgapur');
+
+1 row created.
+
+SQL> insert into student values(14, 'Shiltu Dey', 'MCA', 'Bankura');
+
+1 row created.
+
+SQL> select * from student;
+
+   ROLL_NO NAME                 DEPT                 CITY                       
+---------- -------------------- -------------------- --------------------       
+        39 Arjit Kumar Singh    MCA                  Dhanbad                    
+        45 Tanmay Pal           MCA                  Durgapur                   
+        14 Shiltu Dey           MCA                  Bankura                    
+
+SQL> alter table student add (Email VARCHAR2(20));
+
+Table altered.
+
+SQL> select * from student;
+
+   ROLL_NO NAME                 DEPT                 CITY                       
+---------- -------------------- -------------------- --------------------       
+EMAIL                                                                           
+--------------------                                                            
+        39 Arjit Kumar Singh    MCA                  Dhanbad                    
+                                                                                
+                                                                                
+        45 Tanmay Pal           MCA                  Durgapur                   
+                                                                                
+                                                                                
+        14 Shiltu Dey           MCA                  Bankura                    
+                                                                                
+                                                                                
+
+SQL> select * from student;
+
+   ROLL_NO NAME                 DEPT                 CITY                       
+---------- -------------------- -------------------- --------------------       
+EMAIL                                                                           
+--------------------                                                            
+        39 Arjit Kumar Singh    MCA                  Dhanbad                    
+                                                                                
+                                                                                
+        45 Tanmay Pal           MCA                  Durgapur                   
+                                                                                
+                                                                                
+        14 Shiltu Dey           MCA                  Bankura                    
+                                                                                
+                                                                                
+
+SQL> update student
+  2  set Email=singharjitkumar@gmail.com,
+  3  where Roll_no=39;
+where Roll_no=39
+*
+ERROR at line 3:
+ORA-01747: invalid user.table.column, table.column, or column specification 
+
+
+SQL> update student
+  2  set Email=singharjit@gmail.com,
+  3  where Roll_no=39;
+where Roll_no=39
+*
+ERROR at line 3:
+ORA-01747: invalid user.table.column, table.column, or column specification 
+
+
+SQL> insert into student(Email)
+  2  

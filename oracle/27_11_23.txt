@@ -1,0 +1,24 @@
+mysql> create table student (RollNo int primary key, Name varchar(10), DOB date, Dept varchar(10), City varchar(20));
+ERROR 1046 (3D000): No database selected
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| arjit              |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> use arjit;
+Database changed
+mysql> create table student (RollNo int primary key, Name varchar(10), DOB date, Dept varchar(10), City varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table student1 (RollNo int primary key, Name varchar2(10), DOB date, Dept varchar2(10), City varchar2(20));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar2(10), DOB date, Dept varchar2(10), City varchar2(20))' at line 1
+mysql> insert into student values(&RollNo, '&Name', '&DOB', 'Dept', 'City');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '&RollNo, '&Name', '&DOB', 'Dept', 'City')' at line 1
+mysql> notee;

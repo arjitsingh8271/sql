@@ -1,0 +1,135 @@
+> mysql -u root -p arjit		--for directly open arjit database
+	OR
+> mysql -u root -p
+> use arjit;		--for use arjit database;
+
+> tee /home/arjit/Desktop/Programming/mysql/file_name.txt;		--all query u enter save in file file_name.txt
+> notee;			--for save the file and exit from tee
+
+
+> create table student (RollNo int primary key, Name varchar(10), DOB date, Dept varchar(10), City varchar(20));
+> desc student;
++--------+---------------+------+-----+---------+-------+
+| Field  | Type          | Null | Key | Default | Extra |
++--------+---------------+------+-----+---------+-------+
+| RollNo | int           | NO   | PRI | NULL    |       |
+| Name   | varchar(10)   | YES  |     | NULL    |       |
+| DOB    | date          | YES  |     | NULL    |       |
+| Dept   | varchar(10)   | YES  |     | NULL    |       |
+| City   | varchar(20)   | YES  |     | NULL    |       |
++--------+---------------+------+-----+---------+-------+
+
+> insert into student values(39, 'Arjit', '2002-11-30', 'MCA', 'Dhanbad');
+> select * from student;
++--------+-------+------------+------+---------+
+| RollNo | Name  | DOB        | Dept | City    |
++--------+-------+------------+------+---------+
+|     39 | Arjit | 2002-11-30 | MCA  | Dhanbad | 
++--------+-------+------------+------+---------+
+
+
+> ALTER TABLE student ADD Sex ENUM('M', 'F', 'O');		--add a new colunm name is Sex which take values either M, F or O.
+> desc student;
++--------+-------------------+------+-----+---------+-------+
+| Field  | Type              | Null | Key | Default | Extra |
++--------+-------------------+------+-----+---------+-------+
+| RollNo | int               | NO   | PRI | NULL    |       |
+| Name   | varchar(10)       | YES  |     | NULL    |       |
+| DOB    | date              | YES  |     | NULL    |       |
+| Dept   | varchar(10)       | YES  |     | NULL    |       |
+| City   | varchar(20)       | YES  |     | NULL    |       |
+| Sex    | enum('M','F','O') | YES  |     | NULL    |       |
++--------+-------------------+------+-----+---------+-------+
+
+> select * from student;
++--------+-------+------------+------+---------+------+
+| RollNo | Name  | DOB        | Dept | City    | Sex  |
++--------+-------+------------+------+---------+------+
+|     39 | Arjit | 2002-11-30 | MCA  | Dhanbad | NULL |
++--------+-------+------------+------+---------+------+
+
+> update student set Sex='M' where RollNo=39;
+> select * from student;
++--------+-------+------------+------+---------+------+
+| RollNo | Name  | DOB        | Dept | City    | Sex  |
++--------+-------+------------+------+---------+------+
+|     39 | Arjit | 2002-11-30 | MCA  | Dhanbad | M    |
++--------+-------+------------+------+---------+------+
+
+
+> alter table student rename column RollNo to Roll_no;
+> select * from student;
++---------+-------+------------+------+---------+------+
+| Roll_no | Name  | DOB        | Dept | City    | Sex  |
++---------+-------+------------+------+---------+------+
+|      39 | Arjit | 2002-11-30 | MCA  | Dhanbad | M    |
++---------+-------+------------+------+---------+------+
+
+> insert into student values(45, 'Tanmay', '2002-02-01', 'BCA', 'Muchipara', 'M');
+> insert into student values(14, 'Shiltu', '2002-04-10', 'Btech', 'Bishnupure', 'M');
+> insert into student values(35, 'Binit', '2001-10-25', 'Mtech', 'Durgapur', 'M');
+> insert into student values(19, 'Abhishek', '2002-05-10', 'MCA', 'Dhanbad', 'M');
+> insert into student values(49, 'Priyanka', '2001-10-01', 'MBA', 'Durgapur', 'F');
+			OR
+> insert into student(Roll_no, Name, DOB, Dept, City, Sex)
+values(45, 'Tanmay', '2002-02-01', 'BCA', 'Muchipara', 'M'),
+(14, 'Shiltu', '2002-04-10', 'Btech', 'Bishnupure', 'M'),
+(35, 'Binit', '2001-10-25', 'Mtech', 'Durgapur', 'M'),
+(19, 'Abhishek', '2002-05-10', 'MCA', 'Dhanbad', 'M')
+(49, 'Priyanka', '2001-10-01', 'MBA', 'Durgapur', 'F')
+
+> select * from student;
++---------+----------+------------+-------+------------+------+
+| Roll_no | Name     | DOB        | Dept  | City       | Sex  |
++---------+----------+------------+-------+------------+------+
+|      14 | Shiltu   | 2002-04-10 | Btech | Bishnupure | M    |
+|      19 | Abhishek | 2002-05-10 | MCA   | Dhanbad    | M    |
+|      35 | Binit    | 2001-10-25 | Mtech | Durgapur   | M    |
+|      39 | Arjit    | 2002-11-30 | MCA   | Dhanbad    | M    |
+|      45 | Tanmay   | 2002-02-01 | BCA   | Muchipara  | M    |
+|      49 | Priyanka | 2001-10-01 | MBA   | Durgapur   | F    |
++---------+----------+------------+-------+------------+------+
+
+
+> create table subject(Paper_code numeric, Paper_name varchar(20), S_roll_no int references student(Roll_no) on delete cascade, Dept varchar(10), primary key(S_roll_no, Paper_code));
+> desc subject;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| S_roll_no  | int           | NO   | PRI | NULL    |       |
+| Paper_code | decimal(10,0) | NO   | PRI | NULL    |       |
+| Paper_name | varchar(20)   | YES  |     | NULL    |       |
+| Dept       | varchar(10)   | YES  |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+
+> insert into subject values(101, 'Python', 39, 'MCA');
+
+
+
+--------------------------------------------------------------------
+08/12/23
+
+
+> create table student (RollNo int primary key, Name varchar(10), DOB date, Dept varchar(10), Sex ENUM('M','F','T'), City varchar(20));
+
+> desc student;
++--------+-------------------+------+-----+---------+-------+
+| Field  | Type              | Null | Key | Default | Extra |
++--------+-------------------+------+-----+---------+-------+
+| RollNo | int               | NO   | PRI | NULL    |       |
+| Name   | varchar(10)       | YES  |     | NULL    |       |
+| DOB    | date              | YES  |     | NULL    |       |
+| Dept   | varchar(10)       | YES  |     | NULL    |       |
+| Sex    | enum('M','F','T') | YES  |     | NULL    |       |
+| City   | varchar(20)       | YES  |     | NULL    |       |
++--------+-------------------+------+-----+---------+-------+
+
+> insert into student values(39, 'Arjit', '2002-11-30', 'MCA', 'M', 'Dhanbad');
+> insert into student values(45, 'Tanmay', '2002-08-15', 'BCA', 'M', 'Illambazar');
+> insert into student values(14, 'Shiltu', '2002-02-02', 'Btech', 'M', 'Bishnupur');
+> insert into student values(35, 'Binit', '2002-12-25', 'Mtech', 'M', 'Durgapur');
+> insert into student values(19, 'Abhishek', '2001-02-10', 'MCA', 'M', 'Dhanbad');
+> insert into student values(49, 'Priyanka', '2003-04-28', 'MBA', 'F', 'Durgapur');
+
+> delete from student where RollNo=45;
+

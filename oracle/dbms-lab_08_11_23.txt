@@ -1,0 +1,404 @@
+SQL> create table student1(Roll_no NUMBER, Name VARCHAR(20), Address VARCHAR(20), Ph_no NUMBER(10), DOB date, Marks number(5,2));
+create table student1(Roll_no NUMBER, Name VARCHAR(20), Address VARCHAR(20), Ph_no NUMBER(10), DOB date, Marks number(5,2))
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> desc student1;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ROLL_NO                                            NUMBER
+ NAME                                               VARCHAR2(20)
+ ADDRESS                                            VARCHAR2(20)
+ PH_NO                                              NUMBER(10)
+ DOB                                                DATE
+ MARKS                                              NUMBER(5,2)
+
+SQL> select * from student1;
+
+no rows selected
+
+SQL> insert into student1 values(39, 'Arjit', 'Dhanbad', 8271562141, '30-nov-2002', '72.80');
+
+1 row created.
+
+SQL> insert into student1 values(14, 'Tanmay', 'Durgapur', 8271556464, '11-nov-2002', '78.80');
+
+1 row created.
+
+SQL> insert into student1 values(45, 'shiltu', 'Durgapur', 8271556464, '11-nov-2002', '88.80');
+
+1 row created.
+
+SQL> insert into student1 values(34, 'Binit', 'Durgapur', 9961556464, '11-oct-2003', '68.80');
+
+1 row created.
+
+SQL> select * from student1;
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        39 Arjit                Dhanbad              8271562141 30-NOV-02       
+      72.8                                                                      
+                                                                                
+        14 Tanmay               Durgapur             8271556464 11-NOV-02       
+      78.8                                                                      
+                                                                                
+        45 shiltu               Durgapur             8271556464 11-NOV-02       
+      88.8                                                                      
+                                                                                
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        34 Binit                Durgapur             9961556464 11-OCT-03       
+      68.8                                                                      
+                                                                                
+
+SQL> select Roll_no, Name from student;
+
+   ROLL_NO NAME                                                                 
+---------- --------------------                                                 
+        39 Arjit Kumar Singh                                                    
+        45 Tanmay Pal                                                           
+        14 Shiltu Dey                                                           
+
+SQL> select * from student1 order by Name ASC;
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        39 Arjit                Dhanbad              8271562141 30-NOV-02       
+      72.8                                                                      
+                                                                                
+        34 Binit                Durgapur             9961556464 11-OCT-03       
+      68.8                                                                      
+                                                                                
+        14 Tanmay               Durgapur             8271556464 11-NOV-02       
+      78.8                                                                      
+                                                                                
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        45 shiltu               Durgapur             8271556464 11-NOV-02       
+      88.8                                                                      
+                                                                                
+
+SQL> select * from student1 order by Name DESC;
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        45 shiltu               Durgapur             8271556464 11-NOV-02       
+      88.8                                                                      
+                                                                                
+        14 Tanmay               Durgapur             8271556464 11-NOV-02       
+      78.8                                                                      
+                                                                                
+        34 Binit                Durgapur             9961556464 11-OCT-03       
+      68.8                                                                      
+                                                                                
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        39 Arjit                Dhanbad              8271562141 30-NOV-02       
+      72.8                                                                      
+                                                                                
+
+SQL> select * from student where Marks>75;
+select * from student where Marks>75
+                            *
+ERROR at line 1:
+ORA-00904: "MARKS": invalid identifier 
+
+
+SQL> select * from student where Marks>75;;
+select * from student where Marks>75;
+                                    *
+ERROR at line 1:
+ORA-00911: invalid character 
+
+
+SQL> 
+SQL> 
+SQL> 
+SQL> select * from student1 where Marks>75;
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        14 Tanmay               Durgapur             8271556464 11-NOV-02       
+      78.8                                                                      
+                                                                                
+        45 shiltu               Durgapur             8271556464 11-NOV-02       
+      88.8                                                                      
+                                                                                
+
+SQL> select * from student1 where Marks>75 and Marks<80;
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        14 Tanmay               Durgapur             8271556464 11-NOV-02       
+      78.8                                                                      
+                                                                                
+
+SQL> select * from student1 where Marks between 75 and 80;
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        14 Tanmay               Durgapur             8271556464 11-NOV-02       
+      78.8                                                                      
+                                                                                
+
+SQL> select * from student1 where Marks not between 75 and 80;
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        39 Arjit                Dhanbad              8271562141 30-NOV-02       
+      72.8                                                                      
+                                                                                
+        45 shiltu               Durgapur             8271556464 11-NOV-02       
+      88.8                                                                      
+                                                                                
+        34 Binit                Durgapur             9961556464 11-OCT-03       
+      68.8                                                                      
+                                                                                
+
+SQL> select * from student1 where Address=Durgapur;
+select * from student1 where Address=Durgapur
+                                     *
+ERROR at line 1:
+ORA-00904: "DURGAPUR": invalid identifier 
+
+
+SQL> select * from student1 where Address='Durgapur';
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        14 Tanmay               Durgapur             8271556464 11-NOV-02       
+      78.8                                                                      
+                                                                                
+        45 shiltu               Durgapur             8271556464 11-NOV-02       
+      88.8                                                                      
+                                                                                
+        34 Binit                Durgapur             9961556464 11-OCT-03       
+      68.8                                                                      
+                                                                                
+
+SQL> select * from student1 where Address='Durgapur','Dhanbad';
+select * from student1 where Address='Durgapur','Dhanbad'
+                                               *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select * from student1 where Address=('Durgapur','Dhanbad');
+select * from student1 where Address=('Durgapur','Dhanbad')
+                                    *
+ERROR at line 1:
+ORA-01797: this operator must be followed by ANY or ALL 
+
+
+SQL> select * from student1 where Address in ('Durgapur','Dhanbad');
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        39 Arjit                Dhanbad              8271562141 30-NOV-02       
+      72.8                                                                      
+                                                                                
+        14 Tanmay               Durgapur             8271556464 11-NOV-02       
+      78.8                                                                      
+                                                                                
+        45 shiltu               Durgapur             8271556464 11-NOV-02       
+      88.8                                                                      
+                                                                                
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        34 Binit                Durgapur             9961556464 11-OCT-03       
+      68.8                                                                      
+                                                                                
+
+SQL> select * from student where Address='&Address1' or Address='&Address2';
+Enter value for address1: Durgapur
+Enter value for address2: Dhanbad
+old   1: select * from student where Address='&Address1' or Address='&Address2'
+new   1: select * from student where Address='Durgapur' or Address='Dhanbad'
+select * from student where Address='Durgapur' or Address='Dhanbad'
+                                                  *
+ERROR at line 1:
+ORA-00904: "ADDRESS": invalid identifier 
+
+
+SQL> select * from student;
+
+   ROLL_NO NAME                 DEPT                 CITY                       
+---------- -------------------- -------------------- --------------------       
+        39 Arjit Kumar Singh    MCA                  Dhanbad                    
+        45 Tanmay Pal           MCA                  Durgapur                   
+        14 Shiltu Dey           MCA                  Bankura                    
+
+SQL> select * from student1 where Address='&Address1' or Address='&Address2';
+Enter value for address1: Durgapur
+Enter value for address2: Dhanbad
+old   1: select * from student1 where Address='&Address1' or Address='&Address2'
+new   1: select * from student1 where Address='Durgapur' or Address='Dhanbad'
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        39 Arjit                Dhanbad              8271562141 30-NOV-02       
+      72.8                                                                      
+                                                                                
+        14 Tanmay               Durgapur             8271556464 11-NOV-02       
+      78.8                                                                      
+                                                                                
+        45 shiltu               Durgapur             8271556464 11-NOV-02       
+      88.8                                                                      
+                                                                                
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        34 Binit                Durgapur             9961556464 11-OCT-03       
+      68.8                                                                      
+                                                                                
+
+SQL> select * from student1 order by Address ACS and order by Address DESC;
+select * from student1 order by Address ACS and order by Address DESC
+                                        *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select * from student1 order by Address ACS and order by Name DESC;
+select * from student1 order by Address ACS and order by Name DESC
+                                        *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select * from student1 order by Address ACS and Name DESC;
+select * from student1 order by Address ACS and Name DESC
+                                        *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select * from student1 order by Address ACS, Name DESC;
+select * from student1 order by Address ACS, Name DESC
+                                        *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select * from student1 order by Address ACS, Name DESC;
+select * from student1 order by Address ACS, Name DESC
+                                        *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select * from student1 order by Address ASC, Name DESC;
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        39 Arjit                Dhanbad              8271562141 30-NOV-02       
+      72.8                                                                      
+                                                                                
+        45 shiltu               Durgapur             8271556464 11-NOV-02       
+      88.8                                                                      
+                                                                                
+        14 Tanmay               Durgapur             8271556464 11-NOV-02       
+      78.8                                                                      
+                                                                                
+
+   ROLL_NO NAME                 ADDRESS                   PH_NO DOB             
+---------- -------------------- -------------------- ---------- ---------       
+     MARKS                                                                      
+----------                                                                      
+        34 Binit                Durgapur             9961556464 11-OCT-03       
+      68.8                                                                      
+                                                                                
+
+SQL> SELECT SYSDATE-DOB FROM student1;
+
+SYSDATE-DOB                                                                     
+-----------                                                                     
+  7648.5559                                                                     
+  7667.5559                                                                     
+  7667.5559                                                                     
+  7333.5559                                                                     
+
+SQL> SELECT (SYSDATE-DOB)/365 FROM student1;
+
+(SYSDATE-DOB)/365                                                               
+-----------------                                                               
+       20.9549522                                                               
+        21.007007                                                               
+        21.007007                                                               
+       20.0919385                                                               
+
+SQL> SELECT Roll_no, Name, Ph_no, Address, Marks (SYSDATE-DOB)/365 AGE FROM student1;
+SELECT Roll_no, Name, Ph_no, Address, Marks (SYSDATE-DOB)/365 AGE FROM student1
+                                      *
+ERROR at line 1:
+ORA-00904: "MARKS": invalid identifier 
+
+
+SQL> SELECT Roll_no, Name, Ph_no, Address, Marks, (SYSDATE-DOB)/365 AGE FROM student1;
+
+   ROLL_NO NAME                      PH_NO ADDRESS                   MARKS      
+---------- -------------------- ---------- -------------------- ----------      
+       AGE                                                                      
+----------                                                                      
+        39 Arjit                8271562141 Dhanbad                    72.8      
+20.9549565                                                                      
+                                                                                
+        14 Tanmay               8271556464 Durgapur                   78.8      
+21.0070113                                                                      
+                                                                                
+        45 shiltu               8271556464 Durgapur                   88.8      
+21.0070113                                                                      
+                                                                                
+
+   ROLL_NO NAME                      PH_NO ADDRESS                   MARKS      
+---------- -------------------- ---------- -------------------- ----------      
+       AGE                                                                      
+----------                                                                      
+        34 Binit                9961556464 Durgapur                   68.8      
+20.0919428                                                                      
+                                                                                
+
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off;

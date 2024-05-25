@@ -1,0 +1,203 @@
+ed C:\Users\Student\Desktop\mca39\dbms\file.sql
+@ C:\Users\Student\Desktop\mca39\dbms\file.sql
+ 
+18/11/23
+
+Q> Grater than 3.
+set serveroutput on;
+declare
+	a number(10):= &no_1;
+	b number(10):= &no_2;
+	c number(10):= &no_3;
+begin	
+	if(a>b) then
+		if(a>c) then
+			dbms_output.put_line(a);
+		else
+			dbms_output.put_line(c);
+		end if;
+	else
+		if(b>c) then
+			dbms_output.put_line(b);
+		else
+			dbms_output.put_line(c);
+		end if;
+	end if;
+end;
+/
+Enter value for no_1: 4
+old   2:        a number(10):= &no_1;
+new   2:        a number(10):= 4;
+Enter value for no_2: 5
+old   3:        b number(10):= &no_2;
+new   3:        b number(10):= 5;
+Enter value for no_3: 6
+old   4:        c number(10):= &no_3;
+new   4:        c number(10):= 6;
+6
+
+
+
+
+Q>Table_printing
+set serveroutput on;
+declare
+	n number(10):=&n;
+	r number(10):=&r;
+	s number(10);
+	i number(10):=1;
+begin
+	while(i<=r)
+	loop
+		s := i*n;
+		dbms_output.put_line(n||'*'||i||'='||s);
+		i := i+1;
+	end loop;
+end;
+/
+Enter value for n: 5
+old   2:        n number(10):=&n;
+new   2:        n number(10):=5;
+Enter value for r: 10
+old   3:        r number(10):=&r;
+new   3:        r number(10):=10;
+5*1=5
+5*2=10
+5*3=15
+5*4=20
+5*5=25
+5*6=30
+5*7=35
+5*8=40
+5*9=45
+5*10=50
+
+
+
+
+
+Q>Factorial of given number
+set serveroutput on;
+declare
+	n number(2):=&n;
+	i number(2):=1;
+	fact number(10):=1;
+begin
+	while(i<=n) loop
+		fact:=fact*i;
+		i := i+1;
+	end loop;
+	dbms_output.put_line(fact);
+	
+end;
+/
+Enter value for n: 5
+old   2:        n number(2):=&n;
+new   2:        n number(2):=5;
+120
+
+
+
+
+
+
+Q>Simple_interest (simple_interest (P, R, Time, SI))
+create table simple_interest(P number(10), R number(10,2), Time number(10), SI number(10,2));
+set serveroutput on;
+declare
+	P number(10):=&P;
+	R number(10):=&R;
+	T number(10):=&T;
+	SI number(10,2);
+	i number(10):=1;
+begin
+	while(i<=R) loop
+		SI := (P*i*T)/100;
+		insert into simple_interest values(P, i, T, SI);
+		i:=i+1;
+	end loop;
+end;
+/
+Enter value for p: 1000
+old   2:        P number(10):=&P;
+new   2:        P number(10):=1000;
+Enter value for r: 5
+old   3:        R number(10):=&R;
+new   3:        R number(10):=5;
+Enter value for t: 2
+old   4:        T number(10):=&T;
+new   4:        T number(10):=2;
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from simple_interest;
+
+         P          R       TIME         SI
+---------- ---------- ---------- ----------
+      1000          1          2         20
+      1000          2          2         40
+      1000          3          2         60
+      1000          4          2         80
+      1000          5          2        100
+
+
+
+
+
+
+Q>Fibonacci Series
+set serveroutput on;
+declare
+	term_1 number(10):=0;
+	term_2 number(10):=1;
+	n number(10):=&n;
+	fibo number(10):=1;
+	i number(10):=1;
+begin
+	dbms_output.put_line(term_1);
+	dbms_output.put_line(term_2);
+	
+	while(i<n-1) loop
+		fibo:= term_1 + term_2;
+		dbms_output.put_line(fibo);
+	
+		term_1 := term_2;
+		term_2 := fibo;
+		i:=i+1;
+	end loop;
+end;
+/
+Enter value for n: 5
+old   4:        n number(10):=&n;
+new   4:        n number(10):=5;
+0
+1
+1
+2
+3
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------
+
+FUNCTIONS:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

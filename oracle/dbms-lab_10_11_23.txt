@@ -1,0 +1,236 @@
+SQL> set autocommit on;
+SQL> show tables
+SP2-0158: unknown SHOW option "tables"
+SQL> show tables;
+SP2-0158: unknown SHOW option "tables"
+SQL> show table;
+SP2-0158: unknown SHOW option "table"
+SQL> drop student;
+drop student
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option 
+
+
+SQL> drop table student;
+
+Table dropped.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> dsce student;
+SP2-0734: unknown command beginning "dsce stude..." - rest of line ignored.
+SQL> desc student;
+ERROR:
+ORA-04043: object student does not exist 
+
+
+SQL> create table student(Roll int primary key, Name varchar2(20), Course varchar2(10));
+
+Table created.
+
+SQL> insert into student values(&Roll, &Name, &Course);
+Enter value for roll: 1
+Enter value for name: Jhon
+Enter value for course: MCA
+old   1: insert into student values(&Roll, &Name, &Course)
+new   1: insert into student values(1, Jhon, MCA)
+insert into student values(1, Jhon, MCA)
+                                    *
+ERROR at line 1:
+ORA-00984: column not allowed here 
+
+
+SQL> insert into student values(&Roll, '&Name', '&Course');
+Enter value for roll: 1
+Enter value for name: Jhon
+Enter value for course: MCA
+old   1: insert into student values(&Roll, '&Name', '&Course')
+new   1: insert into student values(1, 'Jhon', 'MCA')
+
+1 row created.
+
+Commit complete.
+SQL> insert into student values(&Roll, '&Name', '&Course');
+Enter value for roll: 2
+Enter value for name: Smith
+Enter value for course: M.Tech
+old   1: insert into student values(&Roll, '&Name', '&Course')
+new   1: insert into student values(2, 'Smith', 'M.Tech')
+
+1 row created.
+
+Commit complete.
+SQL> insert into student values(&Roll, '&Name', '&Course');
+Enter value for roll: 3
+Enter value for name: Sam
+Enter value for course: B.Tech
+old   1: insert into student values(&Roll, '&Name', '&Course')
+new   1: insert into student values(3, 'Sam', 'B.Tech')
+
+1 row created.
+
+Commit complete.
+SQL> insert into student values(&Roll, '&Name', '&Course');
+Enter value for roll: 4
+Enter value for name: Rahul
+Enter value for course: MBA
+old   1: insert into student values(&Roll, '&Name', '&Course')
+new   1: insert into student values(4, 'Rahul', 'MBA')
+
+1 row created.
+
+Commit complete.
+SQL> create table subject(Roll int references student, Sub_code int , Sub_name varchar2(10), primary key(Roll, Sub_code));
+
+Table created.
+
+SQL> insert into subject values(&Roll, &Sub_code, '&Sub_name');
+Enter value for roll: 1
+Enter value for sub_code: 001
+Enter value for sub_name: DBMS
+old   1: insert into subject values(&Roll, &Sub_code, '&Sub_name')
+new   1: insert into subject values(1, 001, 'DBMS')
+
+1 row created.
+
+Commit complete.
+SQL> insert into subject values(&Roll, &Sub_code, '&Sub_name');
+Enter value for roll: 2
+Enter value for sub_code: 002
+Enter value for sub_name: SQL
+old   1: insert into subject values(&Roll, &Sub_code, '&Sub_name')
+new   1: insert into subject values(2, 002, 'SQL')
+
+1 row created.
+
+Commit complete.
+SQL> insert into subject values(&Roll, &Sub_code, '&Sub_name');
+Enter value for roll: 3
+Enter value for sub_code: 003
+Enter value for sub_name: D.S
+old   1: insert into subject values(&Roll, &Sub_code, '&Sub_name')
+new   1: insert into subject values(3, 003, 'D.S')
+
+1 row created.
+
+Commit complete.
+SQL> insert into subject values(&Roll, &Sub_code, '&Sub_name');
+Enter value for roll: 4
+Enter value for sub_code: 004
+Enter value for sub_name: BM
+old   1: insert into subject values(&Roll, &Sub_code, '&Sub_name')
+new   1: insert into subject values(4, 004, 'BM')
+
+1 row created.
+
+Commit complete.
+SQL> select * frmo student;
+select * frmo student
+         *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> select * from student;
+
+      ROLL NAME                 COURSE                                          
+---------- -------------------- ----------                                      
+         1 Jhon                 MCA                                             
+         2 Smith                M.Tech                                          
+         3 Sam                  B.Tech                                          
+         4 Rahul                MBA                                             
+
+SQL> select * from subject;
+
+      ROLL   SUB_CODE SUB_NAME                                                  
+---------- ---------- ----------                                                
+         1          1 DBMS                                                      
+         2          2 SQL                                                       
+         3          3 D.S                                                       
+         4          4 BM                                                        
+
+SQL> drop table subject;
+
+Table dropped.
+
+SQL> create table subject(Roll int references student, on delete cascade, Sub_code int , Sub_name varchar2(10), primary key(Roll, Sub_code));
+create table subject(Roll int references student, on delete cascade, Sub_code int , Sub_name varchar2(10), primary key(Roll, Sub_code))
+                                                  *
+ERROR at line 1:
+ORA-00904: : invalid identifier 
+
+
+SQL> create table subject(Roll int references student on delete cascade, Sub_code int , Sub_name varchar2(10), primary key(Roll, Sub_code));
+
+Table created.
+
+SQL> insert into subject values(&Roll, &Sub_code, '&Sub_name');
+Enter value for roll: 1
+Enter value for sub_code: 001
+Enter value for sub_name: DBMS
+old   1: insert into subject values(&Roll, &Sub_code, '&Sub_name')
+new   1: insert into subject values(1, 001, 'DBMS')
+
+1 row created.
+
+Commit complete.
+SQL> insert into subject values(&Roll, &Sub_code, '&Sub_name');
+Enter value for roll: 2
+Enter value for sub_code: 002
+Enter value for sub_name: SQL
+old   1: insert into subject values(&Roll, &Sub_code, '&Sub_name')
+new   1: insert into subject values(2, 002, 'SQL')
+
+1 row created.
+
+Commit complete.
+SQL> insert into subject values(&Roll, &Sub_code, '&Sub_name');
+Enter value for roll: 3
+Enter value for sub_code: 003
+Enter value for sub_name: D.S
+old   1: insert into subject values(&Roll, &Sub_code, '&Sub_name')
+new   1: insert into subject values(3, 003, 'D.S')
+
+1 row created.
+
+Commit complete.
+SQL> insert into subject values(&Roll, &Sub_code, '&Sub_name');
+Enter value for roll: 4
+Enter value for sub_code: 004
+Enter value for sub_name: BM
+old   1: insert into subject values(&Roll, &Sub_code, '&Sub_name')
+new   1: insert into subject values(4, 004, 'BM')
+
+1 row created.
+
+Commit complete.
+SQL> insert into subject values(&Roll, &Sub_code, '&Sub_name');
+Enter value for roll: 5
+Enter value for sub_code: 004
+Enter value for sub_name: B.M
+old   1: insert into subject values(&Roll, &Sub_code, '&Sub_name')
+new   1: insert into subject values(5, 004, 'B.M')
+insert into subject values(5, 004, 'B.M')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (MCA39.SYS_C004041) violated - parent key not 
+found 
+
+
+SQL> delete from student
+  2  where Roll=2;
+
+1 row deleted.
+
+Commit complete.
+SQL> select * from subject;
+
+      ROLL   SUB_CODE SUB_NAME                                                  
+---------- ---------- ----------                                                
+         1          1 DBMS                                                      
+         3          3 D.S                                                       
+         4          4 BM                                                        
+
+SQL> spool off;

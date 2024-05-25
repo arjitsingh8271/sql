@@ -1,0 +1,198 @@
+08/11/2023
+
+SQL> connect
+Enter user-name: mca39
+Enter password:
+Connected.
+SQL>spool 'C:\Users\Student\Desktop\mca39\dbms-lab_08_11_23.txt';
+
+SQL> select sysdate from dual;
+
+SQL> select 2+2 from dual;
+
+create table student1(Roll_no NUMBER, Name VARCHAR(20), Address VARCHAR(20), Ph_no NUMBER(10), DOB date, Marks number(5,2));
+
+insert into student1 values(39, 'Arjit', 'Dhanbad', 8271562141, '30-nov-2002', '72.80');
+
+insert into student1 values(14, 'Tanmay', 'Durgapur', 8271556464, '11-nov-2002', '78.80');
+
+insert into student1 values(45, 'shiltu', 'Durgapur', 8271556464, '11-nov-2002', '88.80');
+
+insert into student1 values(34, 'Binit', 'Durgapur', 9961556464, '11-oct-2003', '68.80');
+
+
+SQL> select Roll_no, Name from student;
+
+SQL> select * from student1 order by Name ASC;
+
+SQL> select * from student1 order by Name DESC;
+
+SQL> select * from student1 where Marks>75;
+
+SQL> select * from student1 where Marks>75 and Marks<80;
+
+SQL> select * from student1 where Marks between 75 and 80;
+
+SQL> select * from student1 where Marks not between 75 and 80;
+
+SQL> select * from student1 where Address='Durgapur';
+
+SQL> select * from student1 where Address in ('Durgapur','Dhanbad');
+
+SQL> select * from student1 where Address='&Address1' or Address='&Address2';
+Enter value for address1: Durgapur
+Enter value for address2: Dhanbad
+
+SQL> select * from student1 order by Address ASC, Name DESC;
+
+SQL> SELECT SYSDATE-DOB FROM student1;
+
+SQL> SELECT (SYSDATE-DOB)/365 FROM student1;
+
+SQL> SELECT Roll_no, Name, Ph_no, Address, Marks, (SYSDATE-DOB)/365 AGE FROM student1;
+
+
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off;
+SQL> exit
+
+or 
+SQL> set autocommit on;			SQL> spool off;
+
+
+
+
+
+10/11/23
+
+SQL> spool 'C:\Users\Student\Desktop\mca39\dbms-lab_10_11_23.txt';
+
+SQL> set autocommit on;
+
+create table student(Roll int primary key, Name varchar2(20), Course varchar2(10));
+
+SQL> insert into student values(&Roll, &Name, &Course);
+
+SQL> create table subject(Roll int references student, Sub_code int , Sub_name varchar2(10), primary key(Roll, Sub_code));
+
+SQL> insert into subject values(&Roll, &Sub_code, '&Sub_name');
+
+SQL> insert into subject values(&Roll, &Sub_code, '&Sub_name');
+Enter value for roll: 5
+Enter value for sub_code: 004
+Enter value for sub_name: B.M
+old   1: insert into subject values(&Roll, &Sub_code, '&Sub_name')
+new   1: insert into subject values(5, 004, 'B.M')
+insert into subject values(5, 004, 'B.M')
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (MCA39.SYS_C004041) violated - parent key not
+found
+
+SQL> delete from student
+  2  where Roll=2;
+
+SQL> spool off;
+SQL> exit
+
+
+
+
+
+
+
+11/12/2023
+
+create table employee(emp_name varchar(15) primary key, street varchar(20), city varchar(20));
+insert into employee values('Deep','Panaghar road', 'Panaghar');
+insert into employee values('Biplob','Suri road', 'Bardhaman');
+insert into employee values('Binit','Durgapur road', 'Durgapur');
+insert into employee values('Shiltu','Bishnupur road', 'Bishnupur');
+insert into employee values('Aniket','Bolpur road', 'Bolpur');
+insert into employee values('Suman','Kolkata road', 'Kokata');
+select * from employee;
+
+create table company(com_name varchar(15) primary key,city varchar(20));
+insert into company values('TCS','Kolkata');
+insert into company values('Amazon','Durgapur');
+insert into company values('Cognizant','Delhi');
+insert into company values('Infosys','Bolpur');
+insert into company values('Google','Mumbai');
+select * from company;
+
+
+create table works (emp_name varchar (15), com_name varchar (20), salary number (10,2), primary key (emp_name, com_name), foreign key(emp_name) references employee(emp_name), foreign key(com_name) references company(com_name));
+insert into works values('Deep','TCS',20000);
+insert into works values('Shiltu','Google',50000);
+insert into works values('Biplob','Infosys',30000);
+insert into works values('Aniket','Amazon',25000);
+insert into works values('Binit','Cognizant',15000);
+insert into works values('Suman','Google',50000);
+select * from works;
+
+create table manager(emp_name varchar (15), mg_name varchar (20),primary key (emp_name), foreign key(emp_name) references employee(emp_name));
+insert into manager values('Deep','Tanmoy');
+insert into manager values('Shiltu','Arjit');
+insert into manager values('Binit','Tanmoy');
+insert into manager values('Aniket','Arjit');
+insert into manager values('Biplob','Bidhan');
+insert into manager values('Suman','Tanmoy');
+select * from manager;
+
+
+1.qn) Find the company that has most employee.
+>select com_name, count(emp_name) from works group by com_name having count(*) = (select max(count(*)) from works group by com_name);
+COM_NAME               COUNT(emp_name)
+-------------------- ----------
+Google                        2
+
+
+2.qn) Find all the employee in the database who live in the same city as the companey they work for
+>select emp_name from employee, company where employee.city = company.city;
+EMP_NAME
+---------------
+Binit
+Aniket
+
+
+3.qn) Find all employe whose works for the 'abc' companey and earn more than 1000
+> select emp_name, salary from works where com_name='Google' and salary > 10000;
+EMP_NAME            SALARY
+--------------- ----------
+Shiltu               50000
+Suman                50000
+
+
+4.qn) Find all the employee who donot work for the 'abc' company.
+> select emp_name, com_name from works where not works.com_name='Google';
+			or
+select emp_name, com_name from works where works.com_name<>'Google';
+			or
+select emp_name, com_name from works where works.com_name!='Google';
+			or
+select emp_name, com_name from works where works.com_name not in 'Google';
+
+EMP_NAME        COM_NAME
+--------------- --------------------
+Deep            TCS
+Biplob          Infosys
+Aniket          Amazon
+Binit           Cognizant
+
+
+5.qn) Find the manager names who manage more then one employee
+> select mg_name from manager group by mg_name having count(emp_name)>2;
+MG_NAME
+--------------------
+Tanmoy
+
+
+6.qn) Find the employe name who earn more than the average salary of each companies
+> select emp_name, salary from works where salary > (select avg(salary) from works);
+EMP_NAME            SALARY 
+--------------- ----------
+Shiltu               50000
+Suman                50000

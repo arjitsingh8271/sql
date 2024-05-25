@@ -1,0 +1,137 @@
+-- DDL
+create table a( id int, name varchar(10), city varchar(20));
+desc a;
+select * from a;
+
+alter table a add gender varchar(10);
+alter table a modify gender varchar(20);
+alter table a drop column gender;
+alter table a add primary key (id);
+
+-- DML
+insert into a values(1, 'raju', 'dhanbad', 'male');
+insert into a values(2, 'juhi', 'ranchi', 'female');
+
+update a set name = 'Raju' where id=1;
+delete from a where id = 2;
+select city from a where name = 'Raju';
+
+
+-- FOREIGN KEY
+create table b( id int, name varchar(10), city varchar(20), foreign key(id) references a(id) );
+desc b;
+alter table b add primary key (id);
+
+create table c( c_id int, name varchar(10), city varchar(20), id int references a);
+desc c;
+
+create table d( d_id int, name varchar(10), city varchar(20));
+desc d;
+alter table d drop column did;
+alter table d add id int;
+alter table d add foreign key(id) references b(id);
+
+
+create table e (Id int primary key, Name varchar(20), Salary int, Address varchar(20), Company varchar(20) );
+insert into e values (1, 'Raju', 3700, 'Dhanbad', 'Amazon');
+insert into e values (2, 'Rahul', 4300, 'Rajpur', 'Meta');
+insert into e values (3, 'Anjali', 5500, 'Ranchi', 'Google');
+insert into e values (4, 'Rahul', 3200, 'Patna', 'FlipKart');
+insert into e values (6, 'Tanmay', 6300, 'Dhanbad', 'Google');
+insert into e values (7, 'Priya', 2000, 'Bokaro', 'TCS');
+insert into e values (8, 'Anjali', 3300, 'Dhanbad', 'Wipro');
+insert into e values (9, 'Rakesh', 2500, 'Ramghar', 'TCS');
+select * from e;
+
+-- Aggregate function
+select count(Name) as Emp_Name from e;
+select max(salary) from e;
+select min(salary) from e;
+select avg(salary) as Average from e;
+select sum(salary) from e;
+
+
+-- Operators
+-- AND
+select * from e where salary < 4000 and salary > 3000;
+-- OR 
+select * from e where salary < 2000 or Name = 'Rahul'
+-- NOT
+select * from e where not salary < 2000;
+select * from e where not Name = 'Anjli';
+select * from e where not Name = 'Anjli' and (salary > 3500 or salary < 5000);
+
+
+-- IN shorthand for multiple ORs
+select * from e where id in (2,5,9);
+select * from e where id not in (1,3,6,8);
+
+
+-- ORDER BY  -- Sorting
+
+-- Ascending order (by deafult)
+select * from e order by Name;
+select * from e order by Salary asc;
+-- Descending order
+select * from e order by Name desc;
+-- Multi column sorting
+select * from e order by Name, Salary;
+select * from e order by Name, Salary desc;
+select * from e order by Name desc, Salary desc;
+
+-- TOP n ROWS
+select Name, Salary from e order by Salary desc fetch first 3 row only;
+select Name, Salary from (select Name, Salary from e order by Salary desc) where rownum <= 3;
+
+
+-- Group by
+select Name, count(*) from e group by Name;
+select Company, count(*) as "No. of Emp" from e group by Company;
+
+-- Group by with having clause
+ select company, count(*) as "No. of Emp" from e group by Company having company='Google';
+
+
+
+
+
+
+
+
+
+
+
+
+create table Employee(E_id int primary key, E_name varchar(20), Dept varchar(20), Salary number);
+
+insert into Employee values(1, 'Ram', 'HR', 10000);
+insert into Employee values(2, 'Amrit', 'MKRT', 20000);
+insert into Employee values(3, 'Ravi', 'HR', 30000);
+insert into Employee values(4, 'Nitin', 'MKRT', 40000);
+insert into Employee values(5, 'Varun', 'IT', 50000);
+
+select * from Employee;
+
+
+-- 01. WASQ to display highest salary.
+select max(salary) from Employee;
+
+--02. WASQ to display the employee name having highest salary.
+select E_name from Employee where salary = (select max(salary) from Employee);
+
+-- 03. WASQ to display second highest salary.
+select max(salary) from Employee where salary != (select max(salary) from Employee);
+
+-- 04. WASQ to display the employee name having second highest salary.
+select E_name from Employee where salary = (select max(salary) from Employee where salary != (select max(salary) from Employee));
+
+-- 05. WASQ to display all Dept name along with no. of employee
+select Dept, count(Dept) from Employee group by Dept;
+
+-- 06. WASQ to display all Dept name where no. of employee are < 2.
+select Dept, count(Dept) from Employee group by Dept having count(Dept)<2;
+
+-- 07. WASQ to display E_name from Dept where no. of employee are < 2.
+select E_name from employee where Dept in (select Dept from Employee group by Dept having count(Dept)<2);
+
+

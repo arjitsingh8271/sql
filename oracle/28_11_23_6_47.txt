@@ -1,0 +1,310 @@
+mysql> show table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> show tables;
++-----------------+
+| Tables_in_arjit |
++-----------------+
+| student         |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> desc student;
++--------+---------------+------+-----+---------+-------+
+| Field  | Type          | Null | Key | Default | Extra |
++--------+---------------+------+-----+---------+-------+
+| RollNo | int           | NO   | PRI | NULL    |       |
+| Name   | varchar(10)   | YES  |     | NULL    |       |
+| DOB    | date          | YES  |     | NULL    |       |
+| Dept   | varchar(10)   | YES  |     | NULL    |       |
+| City   | varchar(20)   | YES  |     | NULL    |       |
+| sex    | enum('M','F') | YES  |     | NULL    |       |
++--------+---------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> insert into student(RollNo, Name, DOB, Dept, City, Sex) values(@RollNo, @Name, @DOB, @Dept, @City, @Sex);
+ERROR 1048 (23000): Column 'RollNo' cannot be null
+mysql> insert into student(RollNo, Name, DOB, Dept, City, Sex) values(&RollNo, &Name, &DOB, &Dept, &City, &Sex);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '&RollNo, &Name, &DOB, &Dept, &City, &Sex)' at line 1
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> 
+mysql> insert into student values(39, 'Arjit', '2002-11-30', 'MCA', 'Dhanbad', 'M');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> ALTER TABLE student DROP sex;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| RollNo | int         | NO   | PRI | NULL    |       |
+| Name   | varchar(10) | YES  |     | NULL    |       |
+| DOB    | date        | YES  |     | NULL    |       |
+| Dept   | varchar(10) | YES  |     | NULL    |       |
+| City   | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student;
++--------+-------+------------+------+---------+
+| RollNo | Name  | DOB        | Dept | City    |
++--------+-------+------------+------+---------+
+|     39 | Arjit | 2002-11-30 | MCA  | Dhanbad |
++--------+-------+------------+------+---------+
+1 row in set (0.00 sec)
+
+mysql> alter table student add Sex enum('M', 'F', 'O');
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++--------+-------------------+------+-----+---------+-------+
+| Field  | Type              | Null | Key | Default | Extra |
++--------+-------------------+------+-----+---------+-------+
+| RollNo | int               | NO   | PRI | NULL    |       |
+| Name   | varchar(10)       | YES  |     | NULL    |       |
+| DOB    | date              | YES  |     | NULL    |       |
+| Dept   | varchar(10)       | YES  |     | NULL    |       |
+| City   | varchar(20)       | YES  |     | NULL    |       |
+| Sex    | enum('M','F','O') | YES  |     | NULL    |       |
++--------+-------------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> desc student;
++--------+-------------------+------+-----+---------+-------+
+| Field  | Type              | Null | Key | Default | Extra |
++--------+-------------------+------+-----+---------+-------+
+| RollNo | int               | NO   | PRI | NULL    |       |
+| Name   | varchar(10)       | YES  |     | NULL    |       |
+| DOB    | date              | YES  |     | NULL    |       |
+| Dept   | varchar(10)       | YES  |     | NULL    |       |
+| City   | varchar(20)       | YES  |     | NULL    |       |
+| Sex    | enum('M','F','O') | YES  |     | NULL    |       |
++--------+-------------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student;
++--------+-------+------------+------+---------+------+
+| RollNo | Name  | DOB        | Dept | City    | Sex  |
++--------+-------+------------+------+---------+------+
+|     39 | Arjit | 2002-11-30 | MCA  | Dhanbad | NULL |
++--------+-------+------------+------+---------+------+
+1 row in set (0.01 sec)
+
+mysql> ^C
+mysql> update student set Sex='M' where RollNo=39;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++--------+-------+------------+------+---------+------+
+| RollNo | Name  | DOB        | Dept | City    | Sex  |
++--------+-------+------------+------+---------+------+
+|     39 | Arjit | 2002-11-30 | MCA  | Dhanbad | M    |
++--------+-------+------------+------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> alter table student change RollNo to Roll_no;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to Roll_no' at line 1
+mysql> alter table student change column RollNo to Roll_no;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to Roll_no' at line 1
+mysql> 
+mysql> 
+mysql> alter table student change column RollNo to Roll_no;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to Roll_no' at line 1
+mysql> 
+mysql> 
+mysql> 
+mysql> alter table student rename RollNo to Roll_no;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to Roll_no' at line 1
+mysql> 
+mysql> 
+mysql> 
+mysql> alter table student rename column RollNo to Roll_no;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++---------+-------+------------+------+---------+------+
+| Roll_no | Name  | DOB        | Dept | City    | Sex  |
++---------+-------+------------+------+---------+------+
+|      39 | Arjit | 2002-11-30 | MCA  | Dhanbad | M    |
++---------+-------+------------+------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> ^C
+mysql> 
+mysql> 
+mysql> insert into student(Roll_no, Name, DOB, Dept, City, Sex),
+    -> values(45, Tanmay, '2002-02-01', 'BCA', 'Muchipara', 'M'),
+    -> values(14, Shiltu, '2002-04-10', 'Btech', 'Bishnupure', 'M'),
+    -> values(35, Binit, '2001-10-25', 'Mtech', 'Durgapur', 'M'),
+    -> values(19, Abhishek, '2002-05-10', 'MCA', 'Dhanbad', 'M')
+    -> values(49, Priyanka, '2001-10-01, 'MBA', 'Durgapur', 'F');
+    '> 
+    '> ^C
+mysql> ^C
+mysql> ^C
+mysql> insert into student(Roll_no, Name, DOB, Dept, City, Sex),
+    -> values(45, Tanmay, '2002-02-01', 'BCA', 'Muchipara', 'M'),
+    -> values(14, Shiltu, '2002-04-10', 'Btech', 'Bishnupure', 'M'),
+    -> values(35, Binit, '2001-10-25', 'Mtech', 'Durgapur', 'M'),
+    -> values(19, Abhishek, '2002-05-10', 'MCA', 'Dhanbad', 'M')
+    -> values(49, Priyanka, '2001-10-01, 'MBA', 'Durgapur', 'F');
+    '> ^C
+mysql> 
+mysql> 
+mysql> 
+mysql> insert into student(Roll_no, Name, DOB, Dept, City, Sex),
+    -> values(45, Tanmay, '2002-02-01', 'BCA', 'Muchipara', 'M'),
+    -> (14, Shiltu, '2002-04-10', 'Btech', 'Bishnupure', 'M'),
+    -> (35, Binit, '2001-10-25', 'Mtech', 'Durgapur', 'M'),
+    -> (19, Abhishek, '2002-05-10', 'MCA', 'Dhanbad', 'M')
+    -> (49, Priyanka, '2001-10-01, 'MBA', 'Durgapur', 'F');
+    '> ^C
+mysql> 
+mysql> insert into student(Roll_no, Name, DOB, Dept, City, Sex)
+    -> values(45, Tanmay, '2002-02-01', 'BCA', 'Muchipara', 'M'),
+    -> (14, Shiltu, '2002-04-10', 'Btech', 'Bishnupure', 'M'),
+    -> (35, Binit, '2001-10-25', 'Mtech', 'Durgapur', 'M'),
+    -> (19, Abhishek, '2002-05-10', 'MCA', 'Dhanbad', 'M')
+    -> (49, Priyanka, '2001-10-01, 'MBA', 'Durgapur', 'F')
+    '> ^C
+mysql> ^C
+mysql> insert into student(Roll_no, Name, DOB, Dept, City, Sex)
+    -> values(45, Tanmay, '2002-02-01', 'BCA', 'Muchipara', 'M'),
+    -> (14, Shiltu, '2002-04-10', 'Btech', 'Bishnupure', 'M'),
+    -> (35, Binit, '2001-10-25', 'Mtech', 'Durgapur', 'M'),
+    -> (19, Abhishek, '2002-05-10', 'MCA', 'Dhanbad', 'M')
+    -> (49, Priyanka, '2001-10-01, 'MBA', 'Durgapur', 'F');
+    '> ^C
+mysql> 
+mysql> insert into student values(45, Tanmay, '2002-02-01', 'BCA', 'Muchipara', 'M');
+ERROR 1054 (42S22): Unknown column 'Tanmay' in 'field list'
+mysql> 
+mysql> 
+mysql> insert into student(Roll_no, Name, DOB, Dept, City, Sex)
+    -> values(45, 'Tanmay', '2002-02-01', 'BCA', 'Muchipara', 'M'),
+    -> (14, 'Shiltu', '2002-04-10', 'Btech', 'Bishnupure', 'M'),
+    -> (35, 'Binit', '2001-10-25', 'Mtech', 'Durgapur', 'M'),
+    -> (19, 'Abhishek', '2002-05-10', 'MCA', 'Dhanbad', 'M')
+    -> (49, 'Priyanka', '2001-10-01, 'MBA', 'Durgapur', 'F');
+    '> 
+    '> ^C
+mysql> 
+mysql> 
+mysql> insert into student values(45, 'Tanmay', '2002-02-01', 'BCA', 'Muchipara', 'M');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(14, 'Shiltu', '2002-04-10', 'Btech', 'Bishnupure', 'M');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(35, 'Binit', '2001-10-25', 'Mtech', 'Durgapur', 'M');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(19, 'Abhishek', '2002-05-10', 'MCA', 'Dhanbad', 'M');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(49, 'Priyanka', '2001-10-01, 'MBA', 'Durgapur', 'F');
+    '> ^C
+mysql> insert into student values(49, 'Priyanka', '2001-10-01', 'MBA', 'Durgapur', 'F');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from student;
++---------+----------+------------+-------+------------+------+
+| Roll_no | Name     | DOB        | Dept  | City       | Sex  |
++---------+----------+------------+-------+------------+------+
+|      14 | Shiltu   | 2002-04-10 | Btech | Bishnupure | M    |
+|      19 | Abhishek | 2002-05-10 | MCA   | Dhanbad    | M    |
+|      35 | Binit    | 2001-10-25 | Mtech | Durgapur   | M    |
+|      39 | Arjit    | 2002-11-30 | MCA   | Dhanbad    | M    |
+|      45 | Tanmay   | 2002-02-01 | BCA   | Muchipara  | M    |
+|      49 | Priyanka | 2001-10-01 | MBA   | Durgapur   | F    |
++---------+----------+------------+-------+------------+------+
+6 rows in set (0.00 sec)
+
+mysql> create table subject(S_roll_no int references student.Roll_no on delete cascade, Paper_code number, Paper_name varchar(20), Dept varchar(10), primary key(S_roll_no, Paper_code));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'number, Paper_name varchar(20), Dept varchar(10), primary key(S_roll_no, Paper_c' at line 1
+mysql> 
+mysql> 
+mysql> 
+mysql> create table subject(S_roll_no int references student.Roll_no on delete cascade, Paper_code numeric, Paper_name varchar(20), Dept varchar(10), primary key(S_roll_no, Paper_code));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from subject;
+Empty set (0.00 sec)
+
+mysql> desc subject;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| S_roll_no  | int           | NO   | PRI | NULL    |       |
+| Paper_code | decimal(10,0) | NO   | PRI | NULL    |       |
+| Paper_name | varchar(20)   | YES  |     | NULL    |       |
+| Dept       | varchar(10)   | YES  |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into subject values(39, 101, 'Python', 'MCA');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into subject values(99, 101, 'Python', 'MCA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> drop table subject;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table subject(Paper_code numeric, Paper_name varchar(20), S_roll_no int references student(Roll_no) on delete cascade, Dept varchar(10), primary key(S_roll_no, Paper_code));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc subject;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| Paper_code | decimal(10,0) | NO   | PRI | NULL    |       |
+| Paper_name | varchar(20)   | YES  |     | NULL    |       |
+| S_roll_no  | int           | NO   | PRI | NULL    |       |
+| Dept       | varchar(10)   | YES  |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into subject values(99, 101, 'Python', 'MCA');
+ERROR 1366 (HY000): Incorrect integer value: 'Python' for column 'S_roll_no' at row 1
+mysql> 
+mysql> insert into subject values(101, 'Python', 99, 'MCA');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> drop table subject;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table subject(Paper_code numeric, Paper_name varchar(20), Roll_no int references student on delete cascade, Dept varchar(10), primary key(S_roll_no, Paper_code));
+ERROR 1072 (42000): Key column 'S_roll_no' doesn't exist in table
+mysql> create table subject(Paper_code numeric, Paper_name varchar(20), Roll_no int references student on delete cascade, Dept varchar(10), primary key(Roll_no, Paper_code));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc subject;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| Paper_code | decimal(10,0) | NO   | PRI | NULL    |       |
+| Paper_name | varchar(20)   | YES  |     | NULL    |       |
+| Roll_no    | int           | NO   | PRI | NULL    |       |
+| Dept       | varchar(10)   | YES  |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into subject values(101, 'Python', 99, 'MCA');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> drop table subject;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> 
+mysql> 
+mysql> ontee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ontee' at line 1
+mysql> notee;
