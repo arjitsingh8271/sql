@@ -1,3 +1,173 @@
+show databases;
+create database celebal_level_A_task;
+show databases;
+use celebal_level_A_task;
+
+
+CREATE TABLE Customers (
+    CustomerID INT PRIMARY KEY,
+    CompanyName VARCHAR(255),
+    ContactName VARCHAR(255),
+    ContactTitle VARCHAR(255),
+    Address VARCHAR(255),
+    City VARCHAR(255),
+    Region VARCHAR(255),
+    PostalCode VARCHAR(50),
+    Country VARCHAR(255),
+    Phone VARCHAR(50),
+    Fax VARCHAR(50)
+);
+
+INSERT INTO Customers (CustomerID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax)
+VALUES
+(1, 'Company A', 'John Doe', 'Manager', '123 Main St', 'Berlin', 'Berlin', '10000', 'Germany', '123-456-7890', '123-456-7891'),
+(2, 'Company B', 'Jane Smith', 'Sales', '456 Park Ave', 'London', 'London', '20000', 'UK', '234-567-8901', '234-567-8902'),
+(3, 'Company C', 'Mike Johnson', 'Owner', '789 Broadway', 'New York', 'NY', '10001', 'USA', '345-678-9012', '345-678-9013'),
+(4, 'Company D', 'Chris Brown', 'Director', '321 Elm St', 'Toronto', 'ON', 'M5G2C3', 'Canada', '456-789-0123', NULL),
+(5, 'Company E', 'Patricia Taylor', 'Sales', '654 Pine St', 'Paris', 'Île-de-France', '75000', 'France', '567-890-1234', '567-890-1235');
+
+-- -------------------------------------------------------------
+
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    LastName VARCHAR(255),
+    FirstName VARCHAR(255),
+    Title VARCHAR(255),
+    TitleOfCourtesy VARCHAR(255),
+    BirthDate DATE,
+    HireDate DATE,
+    Address VARCHAR(255),
+    City VARCHAR(255),
+    Region VARCHAR(255),
+    PostalCode VARCHAR(50),
+    Country VARCHAR(255),
+    HomePhone VARCHAR(50),
+    Extension VARCHAR(10),
+    Photo BLOB,
+    Notes TEXT,
+    ReportsTo INT,
+    FOREIGN KEY (ReportsTo) REFERENCES Employees(EmployeeID)
+);
+
+INSERT INTO Employees (EmployeeID, LastName, FirstName, Title, TitleOfCourtesy, BirthDate, HireDate, Address, City, Region, PostalCode, Country, HomePhone, Extension, Photo, Notes, ReportsTo)
+VALUES
+(1, 'Davolio', 'Nancy', 'Sales Representative', 'Ms.', '1948-12-08', '1992-05-01', '507 - 20th Ave. E.Apt. 2A', 'Seattle', 'WA', '98122', 'USA', '206-555-9857', '5467', NULL, 'Education includes a BA in psychology from Colorado State University in 1970. She also completed "The Art of the Cold Call." Nancy is a member of Toastmasters International.', NULL),
+(2, 'Fuller', 'Andrew', 'Vice President, Sales', 'Dr.', '1952-02-19', '1992-08-14', '908 W. Capital Way', 'Tacoma', 'WA', '98401', 'USA', '206-555-9482', '3457', NULL, 'Andrew received his BTS commercial in 1974 and a Ph.D. in international marketing from the University of Dallas in 1981. He is fluent in French and Italian.', 1),
+(3, 'Leverling', 'Janet', 'Sales Representative', 'Ms.', '1963-08-30', '1992-04-01', '722 Moss Bay Blvd.', 'Kirkland', 'WA', '98033', 'USA', '206-555-3412', '3355', NULL, 'Janet has a BS degree in chemistry from Boston College (1984). She has also completed a certificate program in food retailing management. Janet was hired as a sales associate in 1991 and promoted to sales representative in February 1992.', 2);
+
+-- ----------------------------------------------------------
+
+CREATE TABLE Orders (
+    OrderID INT PRIMARY KEY,
+    CustomerID INT,
+    EmployeeID INT,
+    OrderDate DATE,
+    RequiredDate DATE,
+    ShippedDate DATE,
+    ShipVia INT,
+    Freight DECIMAL(10, 2),
+    ShipName VARCHAR(255),
+    ShipAddress VARCHAR(255),
+    ShipCity VARCHAR(255),
+    ShipRegion VARCHAR(255),
+    ShipPostalCode VARCHAR(50),
+    ShipCountry VARCHAR(255),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID)
+);
+
+INSERT INTO Orders (OrderID, CustomerID, EmployeeID, OrderDate, RequiredDate, ShippedDate, ShipVia, Freight, ShipName, ShipAddress, ShipCity, ShipRegion, ShipPostalCode, ShipCountry)
+VALUES
+(1, 1, 1, '2023-01-01', '2023-01-05', '2023-01-03', 1, 32.38, 'Company A', '123 Main St', 'Berlin', 'Berlin', '10000', 'Germany'),
+(2, 2, 2, '2023-02-01', '2023-02-05', '2023-02-03', 2, 11.61, 'Company B', '456 Park Ave', 'London', 'London', '20000', 'UK'),
+(3, 3, 3, '2023-03-01', '2023-03-05', '2023-03-03', 3, 45.45, 'Company C', '789 Broadway', 'New York', 'NY', '10001', 'USA');
+
+-- -------------------------------------------------------------
+
+CREATE TABLE Suppliers (
+    SupplierID INT PRIMARY KEY,
+    CompanyName VARCHAR(255),
+    ContactName VARCHAR(255),
+    ContactTitle VARCHAR(255),
+    Address VARCHAR(255),
+    City VARCHAR(255),
+    Region VARCHAR(255),
+    PostalCode VARCHAR(50),
+    Country VARCHAR(255),
+    Phone VARCHAR(50),
+    Fax VARCHAR(50),
+    HomePage TEXT
+);
+
+INSERT INTO Suppliers (SupplierID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax, HomePage)
+VALUES
+(1, 'Exotic Liquids', 'Charlotte Cooper', 'Purchasing Manager', '49 Gilbert St.', 'London', NULL, 'EC1 4SD', 'UK', '(171) 555-2222', NULL, NULL),
+(2, 'New Orleans Cajun Delights', 'Shelley Burke', 'Order Administrator', 'P.O. Box 78934', 'New Orleans', 'LA', '70117', 'USA', '(100) 555-4822', NULL, NULL),
+(3, 'Grandma Kelly’s Homestead', 'Regina Murphy', 'Sales Representative', '707 Oxford Rd.', 'Ann Arbor', 'MI', '48104', 'USA', '(313) 555-5735', '(313) 555-3349', NULL);
+
+-- -------------------------------------------------------------
+
+CREATE TABLE Categories (
+    CategoryID INT PRIMARY KEY,
+    CategoryName VARCHAR(255),
+    Description TEXT
+);
+
+INSERT INTO Categories (CategoryID, CategoryName, Description)
+VALUES
+(1, 'Beverages', 'Soft drinks, coffees, teas, beers, and ales'),
+(2, 'Condiments', 'Sweet and savory sauces, relishes, spreads, and seasonings'),
+(3, 'Confections', 'Desserts, candies, and sweet breads');
+
+-- ----------------------------------------------------------------
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY,
+    ProductName VARCHAR(255),
+    SupplierID INT,
+    CategoryID INT,
+    QuantityPerUnit VARCHAR(255),
+    UnitPrice DECIMAL(10, 2),
+    UnitsInStock INT,
+    UnitsOnOrder INT,
+    ReorderLevel INT,
+    Discontinued BIT,
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID),
+    FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
+);
+
+INSERT INTO Products (ProductID, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued)
+VALUES
+(1, 'Chai', 1, 1, '10 boxes x 20 bags', 18.00, 39, 0, 10, 0),
+(2, 'Chang', 1, 1, '24 - 12 oz bottles', 19.00, 17, 40, 25, 0),
+(3, 'Aniseed Syrup', 1, 2, '12 - 550 ml bottles', 10.00, 13, 70, 25, 0),
+(4, 'Chef Anton’s Cajun Seasoning', 2, 2, '48 - 6 oz jars', 22.00, 53, 0, 0, 0),
+(5, 'Chef Anton’s Gumbo Mix', 2, 2, '36 boxes', 21.35, 0, 0, 0, 1);
+
+-- ----------------------------------------------------------------
+
+CREATE TABLE OrderDetails (
+    OrderID INT,
+    ProductID INT,
+    UnitPrice DECIMAL(10, 2),
+    Quantity INT,
+    Discount DECIMAL(3, 2),
+    PRIMARY KEY (OrderID, ProductID),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+INSERT INTO OrderDetails (OrderID, ProductID, UnitPrice, Quantity, Discount)
+VALUES
+(1, 1, 18.00, 10, 0),
+(1, 3, 10.00, 5, 0),
+(2, 2, 19.00, 7, 0),
+(2, 4, 22.00, 3, 0),
+(3, 1, 18.00, 20, 0.1),
+(3, 5, 21.35, 2, 0.05);
+
+-- -----------------------------------------------------
+
 -- 1. List of all customers
 SELECT * FROM Customers;
 
