@@ -47,14 +47,14 @@ BEGIN
         END IF;
 
         IF EXISTS (SELECT 1 FROM SubjectAllotments WHERE StudentId = StudentId) THEN
-            -- Get the current valid subject for the student
+
             SELECT SubjectId INTO CurrentSubjectId
             FROM SubjectAllotments
             WHERE StudentId = StudentId AND Is_Valid = 1
             LIMIT 1;
 
             IF CurrentSubjectId != RequestedSubjectId THEN
-                -- Invalidate the current subject
+
                 UPDATE SubjectAllotments
                 SET Is_Valid = 0
                 WHERE StudentId = StudentId AND Is_Valid = 1;
